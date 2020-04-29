@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        window.location.href = /*[[${link}]]*/ 'No link';
+        /*]]>*/
+    </script>
+    <title>Redirecting...</title>
+</head>
+<body>
+<p>If you are not redirected automatically, follow this <a th:href="${link}">link to redirect</a>.</p>
+</body>
+</html>

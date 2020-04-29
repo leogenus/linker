@@ -1,0 +1,20 @@
+#####For start DB postgres use:
+# docker-compose up --force-recreate
+#####For remove DB postgres use:
+# docker-compose down -v
+version: '3'
+services:
+  database:
+    container_name: postgres_link_server
+    image: "postgres" # use latest official postgres version
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=link_server_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - database-data:/var/lib/link_postgresql/data/ # persist data even if container shuts down
+volumes:
+  database-data: # named volumes can be managed easier using docker-compose

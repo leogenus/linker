@@ -1,0 +1,24 @@
+server.port: 8093
+spring:
+  application.name: kvikk-server
+  #Databese
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5434/link_server_db
+    username: postgres
+    password: postgres
+  ## Flyway
+  flyway:
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    baseline-on-migrate: true
+    baseline-version: 0
+    enabled: true
+  ## Hibernate Properties
+  jpa:
+    generate-ddl: false
+    hibernate.ddl-auto: none
+    properties.hibernate.jdbc.lob.non_contextual_creation: true
+    properties.hibernate.temp.use_jdbc_metadata_defaults: false
+    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
