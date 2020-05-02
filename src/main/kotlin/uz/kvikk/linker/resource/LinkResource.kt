@@ -1,22 +1,17 @@
 package uz.kvikk.linker.resource
 
-import org.springframework.stereotype.Controller
-import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
+import uz.kvikk.linker.service.LinkService
+import uz.kvikk.linker.domain.rest.LinkRequest
 
-
-@Controller
-class LinkResource {
-    @GetMapping("/")
-    fun test(model: Model): String {
-        model.addAttribute("test", "Test text!")
-        return "index"
-    }
-
-    @GetMapping("/{link}")
-    fun link(@PathVariable link: String, model: Model): String {
-        model.addAttribute("link", link)
-        return "link"
-    }
+@RestController
+@RequestMapping("/api/link")
+class LinkResource(
+        private val linkService: LinkService
+) {
+    @PostMapping("create")
+    fun create(@RequestBody body: LinkRequest): ResponseEntity<*> =
+            ResponseEntity.ok(linkService.create(body))
 }
+

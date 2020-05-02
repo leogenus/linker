@@ -1,9 +1,59 @@
 <!DOCTYPE HTML>
 <html lang="en-US" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Test...</title>
+    <title>Linker | Create own short url</title>
+
 </head>
 <body>
-<p th:text="${test}"></p>
+
+<form id="myForm" style="display: none">
+    <label>Your url:</label>
+    <input type="text" name="url" th:value="${link}">
+    <button type="button" id="submitBtn">Create link</button>
+</form>
+
+<div id="result" style="display: none">
+    <p class="text"></p>
+    <button type="button" id="newBtn">Create new link</button>
+</div>
+
+
+<script th:src="@{../static/js/jquery.min.js}"></script>
+<script lang="text/javascript">
+    let start = function () {
+        $('#myForm').css("display", "block");
+        $('#result').css("display", "none");
+    };
+    let done = function () {
+        $('#myForm').css("display", "none");
+        $('#result').css("display", "block");
+    };
+
+    $(() => {
+        start();
+         $("#newBtn").click(start);
+
+        $("#submitBtn").click(() => {
+            let url = $("#myForm input[name=url]").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/api/link/create",
+                data: JSON.stringify({url}),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: (data) => {
+                    done();
+                    $('#result .text').html(JSON.stringify(data))
+                },
+                failure: (errMsg) => {
+                    start();
+                    alert(errMsg);
+                }
+            });
+
+        });
+    });
+</script>
 </body>
 </html>
